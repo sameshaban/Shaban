@@ -1,1 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>فتح التطبيق</title>
+<script>
+  window.onload = function() {
+    // محاولة فتح التطبيق
+    window.location = "intent://open#Intent;scheme=dalil;package=com.shaban.dalil;end";
 
+    // إذا لم يفتح التطبيق خلال 1.5 ثانية
+    setTimeout(function(){
+      window.location = "https://play.google.com/store/apps/details?id=com.shaban.dalil";
+    }, 1500);
+  }
+</script>
+</head>
+<body>
+  <p>جارٍ فتح التطبيق …</p>
+  <p>إذا لم يفتح تلقائيًا، اضغط  
+     <a href="https://play.google.com/store/apps/details?id=com.shaban.dalil">هنا</a>
+  </p>
+</body>
+</html>
