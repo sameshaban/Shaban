@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>فتح التطبيق</title>
-
   <style>
     body { font-family: Arial, sans-serif; direction: rtl; margin: 24px; }
     .box { max-width: 520px; margin: 0 auto; padding: 18px; border: 1px solid #ddd; border-radius: 12px; }
@@ -20,44 +19,35 @@
 <body>
   <div class="box">
     <h2>جارٍ فتح التطبيق…</h2>
-    <p>إذا لم يفتح التطبيق تلقائيًا خلال ثوانٍ، استخدم الأزرار بالأسفل.</p>
+    <p>إذا لم يفتح التطبيق تلقائيًا، اضغط “فتح التطبيق”. وإذا غير مثبت، قم بتحميله من زر التحميل.</p>
 
     <a class="btn" id="openBtn" href="#">فتح التطبيق</a>
-    <a class="btn" id="storeBtn" href="#">فتح متجر Google Play</a>
+    <a class="btn" id="apkBtn" href="#" target="_blank">تحميل التطبيق (APK)</a>
   </div>
 
   <script>
-    // ======= بيانات تطبيقك =======
-    const PACKAGE_NAME = "com.my.newproject14";
-    const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=" + PACKAGE_NAME;
+    const PACKAGE_NAME = "com.my.newproject40";
 
-    // (اختياري) دعم باراميترات مثل ?id=123&type=place
+    // ضع رابط APK المباشر هنا (مثال: GitHub Releases)
+    const APK_URL = "https://example.com/app.apk";
+
+    // باراميترات اختيارية مثل ?id=123&type=place
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id") || "";
     const type = params.get("type") || "";
 
     const deepPath = "open" + (id ? ("?id=" + encodeURIComponent(id) + (type ? ("&type=" + encodeURIComponent(type)) : "")) : "");
 
-    // Intent لفتح التطبيق (الأكثر شيوعًا)
-    // ملاحظة: scheme هنا اسم افتراضي "dalil" — إذا ما عندك deep link داخل التطبيق، عادي، الهدف فتح التطبيق فقط.
+    // Intent لفتح التطبيق (مهم: scheme هنا "dalil" مجرد اسم، لا يؤثر على فتح التطبيق نفسه)
     const INTENT_URL =
       "intent://" + deepPath +
       "#Intent;scheme=dalil;package=" + PACKAGE_NAME + ";end;";
 
-    // أزرار احتياطية
     document.getElementById("openBtn").setAttribute("href", INTENT_URL);
-    document.getElementById("storeBtn").setAttribute("href", PLAY_STORE_URL);
+    document.getElementById("apkBtn").setAttribute("href", APK_URL);
 
-    // محاولة فتح التطبيق تلقائيًا
-    const start = Date.now();
+    // محاولة فتح تلقائية (قد لا تعمل تلقائيًا في بعض الأجهزة لذلك يوجد زر)
     window.location.href = INTENT_URL;
-
-    // إذا ما انفتح، حوّل للمتجر بعد 2 ثانية
-    setTimeout(function () {
-      if (Date.now() - start < 2500) {
-        window.location.href = PLAY_STORE_URL;
-      }
-    }, 2000);
   </script>
 </body>
 </html>
