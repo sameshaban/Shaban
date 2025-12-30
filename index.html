@@ -9,44 +9,26 @@
     .box { max-width: 520px; margin: 0 auto; padding: 18px; border: 1px solid #ddd; border-radius: 12px; }
     h2 { margin: 0 0 12px; }
     p { line-height: 1.7; }
-    a.btn {
-      display: inline-block; margin: 8px 6px 0 0; padding: 10px 14px;
-      border-radius: 10px; text-decoration: none; border: 1px solid #000;
-    }
+    a.btn { display:inline-block; margin:8px 6px 0 0; padding:10px 14px; border-radius:10px; text-decoration:none; border:1px solid #000; }
   </style>
 </head>
-
 <body>
   <div class="box">
-    <h2>جارٍ فتح التطبيق…</h2>
-    <p>إذا لم يفتح التطبيق تلقائيًا، اضغط “فتح التطبيق”. وإذا غير مثبت، قم بتحميله من زر التحميل.</p>
+    <h2>فتح التطبيق</h2>
+    <p>إذا كان التطبيق مثبتًا على هاتفك، اضغط الزر التالي لفتحه.</p>
 
     <a class="btn" id="openBtn" href="#">فتح التطبيق</a>
-    <a class="btn" id="apkBtn" href="#" target="_blank">تحميل التطبيق (APK)</a>
   </div>
 
   <script>
     const PACKAGE_NAME = "com.my.newproject40";
 
-    // ضع رابط APK المباشر هنا (مثال: GitHub Releases)
-    const APK_URL = "https://example.com/app.apk";
-
-    // باراميترات اختيارية مثل ?id=123&type=place
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id") || "";
-    const type = params.get("type") || "";
-
-    const deepPath = "open" + (id ? ("?id=" + encodeURIComponent(id) + (type ? ("&type=" + encodeURIComponent(type)) : "")) : "");
-
-    // Intent لفتح التطبيق (مهم: scheme هنا "dalil" مجرد اسم، لا يؤثر على فتح التطبيق نفسه)
-    const INTENT_URL =
-      "intent://" + deepPath +
-      "#Intent;scheme=dalil;package=" + PACKAGE_NAME + ";end;";
+    // هذا Intent يفتح التطبيق المثبّت مباشرة بالباكج نيم
+    const INTENT_URL = "intent://open#Intent;scheme=dalil;package=" + PACKAGE_NAME + ";end;";
 
     document.getElementById("openBtn").setAttribute("href", INTENT_URL);
-    document.getElementById("apkBtn").setAttribute("href", APK_URL);
 
-    // محاولة فتح تلقائية (قد لا تعمل تلقائيًا في بعض الأجهزة لذلك يوجد زر)
+    // محاولة فتح تلقائية (قد لا تعمل على بعض الأجهزة، لذلك الزر موجود)
     window.location.href = INTENT_URL;
   </script>
 </body>
