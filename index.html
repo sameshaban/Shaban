@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>فتح تطبيق دليل</title>
+  <title>فتح التطبيق</title>
 
   <style>
     body { font-family: Arial, sans-serif; direction: rtl; margin: 24px; }
@@ -20,17 +20,15 @@
 <body>
   <div class="box">
     <h2>جارٍ فتح التطبيق…</h2>
-    <p>
-      إذا لم يفتح التطبيق تلقائيًا خلال ثوانٍ، استخدم الأزرار بالأسفل.
-    </p>
+    <p>إذا لم يفتح التطبيق تلقائيًا خلال ثوانٍ، استخدم الأزرار بالأسفل.</p>
 
     <a class="btn" id="openBtn" href="#">فتح التطبيق</a>
     <a class="btn" id="storeBtn" href="#">فتح متجر Google Play</a>
   </div>
 
   <script>
-    // ======= عدّل الباكج هنا إذا لزم =======
-    const PACKAGE_NAME = "com.shaban.dalil";
+    // ======= بيانات تطبيقك =======
+    const PACKAGE_NAME = "com.my.newproject14";
     const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=" + PACKAGE_NAME;
 
     // (اختياري) دعم باراميترات مثل ?id=123&type=place
@@ -38,12 +36,10 @@
     const id = params.get("id") || "";
     const type = params.get("type") || "";
 
-    // يمكنك تغيير "open" لمسار منطقي داخل intent (ليس شرط)
-    // نضمّن البيانات في query حتى تقرأها داخل التطبيق إذا كان عندك deep link/intent handling
     const deepPath = "open" + (id ? ("?id=" + encodeURIComponent(id) + (type ? ("&type=" + encodeURIComponent(type)) : "")) : "");
 
-    // Intent URI (الأكثر شيوعًا لفتح التطبيق)
-    // ملاحظة: بعض الأجهزة/المتصفحات قد تمنع الفتح التلقائي، لذلك وضعنا زر يدوي أيضًا
+    // Intent لفتح التطبيق (الأكثر شيوعًا)
+    // ملاحظة: scheme هنا اسم افتراضي "dalil" — إذا ما عندك deep link داخل التطبيق، عادي، الهدف فتح التطبيق فقط.
     const INTENT_URL =
       "intent://" + deepPath +
       "#Intent;scheme=dalil;package=" + PACKAGE_NAME + ";end;";
@@ -56,10 +52,8 @@
     const start = Date.now();
     window.location.href = INTENT_URL;
 
-    // إذا لم ينتقل المستخدم للتطبيق غالبًا سيبقى في الصفحة، فنحوّله للمتجر بعد 2 ثانية
+    // إذا ما انفتح، حوّل للمتجر بعد 2 ثانية
     setTimeout(function () {
-      // إذا مازال في الصفحة بعد مدة، وجّه للمتجر
-      // (لا يوجد كشف مثالي، هذا أسلوب شائع)
       if (Date.now() - start < 2500) {
         window.location.href = PLAY_STORE_URL;
       }
